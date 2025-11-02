@@ -1,0 +1,33 @@
+~~ Example program in the proposed beginner-friendly language
+~~ Demonstrates declarations, display, conditionals, loops, and comments
+
+number x = 5;
+decimal pi = 3.14;
+text name = "Student";
+
+display("Welcome", name);
+
+~~ If example
+if x > 3 {
+    display("x is greater than 3");
+} else {
+    display("x is 3 or less");
+}
+
+~~ For-style loop (repeatfor): print 1..3
+repeatfor i = 1 < 4 so {
+    display("loop:", i);
+} end
+
+~~ While-style loop (repeat)
+number count = 0;
+repeat count < 3 so {
+    display("count:", count);
+    count = count + 1;
+} end
+
+~~ Multi-line comment example
+~
+This is a multi-line comment.
+It ends with another tilde on its own line.
+~
