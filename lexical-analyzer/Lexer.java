@@ -53,17 +53,29 @@ public class Lexer{
                     continue;
                 }
 
-            
+           // Check for special characters
             if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
                 String symbol = String.valueOf(ch);
 
                 // Check if '.' is used in a float (digit before and after)
                 if (ch == '.') {
-                    boolean hasDigitBefore = i > 0 && Character.isDigit(code.charAt(i - 1));
-                    boolean hasDigitAfter = i < code.length() - 1 && Character.isDigit(code.charAt(i + 1));
+                    boolean hasDigitBefore = (i > 0) && Character.isDigit(code.charAt(i - 1));
+                    boolean hasDigitAfter = (i + 1 < code.length()) && Character.isDigit(code.charAt(i + 1));
 
                     if (hasDigitBefore && hasDigitAfter) {
                         // Part of a float number → skip classification here
+                        i++;
+                        continue;
+                    }
+                }
+
+                // Check if '_' is part of an identifier (letter/digit before or after)
+                if (ch == '_') {
+                    boolean hasLetterOrDigitBefore = (i > 0) && Character.isLetterOrDigit(code.charAt(i - 1));
+                    boolean hasLetterOrDigitAfter = (i + 1 < code.length()) && Character.isLetterOrDigit(code.charAt(i + 1));
+
+                    if (hasLetterOrDigitBefore || hasLetterOrDigitAfter) {
+                        // Part of an identifier → skip classification here
                         i++;
                         continue;
                     }
@@ -75,17 +87,18 @@ public class Lexer{
 
                 if (tokenType == null) {
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
-                } else {
-                    tokens.add(new Tokenizer(tokenType, symbol).toString());
-                }
+                    i++;
+                    continue;
+                } 
+                // else {
+                //     tokens.add(new Tokenizer(tokenType, symbol).toString());
+                // }
 
-                i++;
-                continue;
             }
 
 
             // Detect operators
-            String operatorChars = "+-*/%=<>!";
+            String operatorChars = "+-*/%=<^>!";
             if (operatorChars.indexOf(ch) != -1) {
 
                 StringBuilder operator = new StringBuilder();
@@ -114,7 +127,29 @@ public class Lexer{
                 continue;
             }
             
+            if (Character.isLetter(ch)) {
+                StringBuilder identifier = new StringBuilder();
 
+                while (i < code.length() && 
+                    (Character.isLetterOrDigit(code.charAt(i)) || code.charAt(i) == '_')) {
+                    identifier.append(code.charAt(i));
+                    i++;
+                }
+
+                String word = identifier.toString();
+
+                if (LookupTable.getTokenType(word) != null) {
+                    tokens.add(new Tokenizer(LookupTable.getTokenType(word), word).toString());
+                } else {
+                    // Check first if valid
+                    String identifierPattern = "^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$";
+                    if (!word.matches(identifierPattern)) {
+                        tokens.add(new Tokenizer("Invalid identifier", word).toString());
+                    }
+                    tokens.add(new Tokenizer("IDENTIFIER", word).toString());
+                }
+                continue;
+        }
 
             // Strings (double-quoted)
             if (ch == '"') {
