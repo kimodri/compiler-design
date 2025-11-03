@@ -70,8 +70,4 @@ public class LookupTable {
             return "INVALID_TOKEN";
         }
 }
-    public static String getTokenType(String symbol) {
-        return lookupTable.get(symbol);
-    }
-}
 
