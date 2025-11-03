@@ -26,7 +26,6 @@ public class Lexer{
             // Handle Identifiers
             if (Character.isLetter(ch)) {
                     StringBuilder lexemeBuilder = new StringBuilder();
-
                     // Collect possible identifier characters
                     while (i < code.length()) {
                         char curr = code.charAt(i);
@@ -38,21 +37,19 @@ public class Lexer{
                         }
                     }
                     String lexeme = lexemeBuilder.toString();
-
                     // Apply identifier validation rules
                     String identifierPattern = "^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$";
                         if (!lexeme.matches(identifierPattern)) {
                             throw new RuntimeException("Invalid identifier: '" + lexeme + "'");
                         }
-                        
                     // Check against reserved keywords
                     String token = LookupTable.getTokenType(lexeme);
-                        if (token != null && !token.equals("INVALID")) {
-                            tokens.add(new Tokenizer(token, lexeme).toString());
-                        } else {
-                            // Default to IDENTIFIER for valid, unmapped lexemes
-                            tokens.add(new Tokenizer("IDENTIFIER", lexeme).toString());
-                        }
+                    if (token != null && !token.equals("INVALID") && !token.equals("INVALID_DELIMITER")) {  // Added check for INVALID_DELIMITER
+                        tokens.add(new Tokenizer(token, lexeme).toString());
+                    } else {
+                        // Default to IDENTIFIER for valid, unmapped lexemes
+                        tokens.add(new Tokenizer("IDENTIFIER", lexeme).toString());
+                    }
                     continue;
                 }
 
