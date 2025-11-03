@@ -60,3 +60,4 @@ public class LookupTable {
         return lookupTable.get(symbol);
     }
 }
+

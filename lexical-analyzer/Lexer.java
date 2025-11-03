@@ -78,6 +78,13 @@ public class Lexer{
                 StringBuilder operator = new StringBuilder();
                 operator.append(ch);
 
+            // Detect operators
+            String operatorChars = "+-*/%=<>!";
+            if (operatorChars.indexOf(ch) != -1) {
+
+                StringBuilder operator = new StringBuilder();
+                operator.append(ch);
+
                 // Check for two-character operators
                 if (i + 1 < code.length()) {
                     char next = code.charAt(i + 1);

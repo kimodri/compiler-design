@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         StringBuilder content = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("../sample_comment.stn"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("../sample_operation.stn"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line).append(System.lineSeparator());
