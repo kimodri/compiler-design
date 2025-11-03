@@ -54,17 +54,18 @@ public class Lexer{
                 String tokenType = LookupTable.getTokenType(symbol);
                 if (tokenType == null) {
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
-                } else {
-                    tokens.add(new Tokenizer(tokenType, symbol).toString());
-                }
+                    i++;
+                    continue;
+                } 
+                // else {
+                //     tokens.add(new Tokenizer(tokenType, symbol).toString());
+                // }
 
-                i++;
-                continue;
             }
 
 
             // Detect operators
-            String operatorChars = "+-*/%=<>!";
+            String operatorChars = "+-*/%=<^>!";
             if (operatorChars.indexOf(ch) != -1) {
 
                 StringBuilder operator = new StringBuilder();
