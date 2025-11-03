@@ -1,0 +1,7 @@
+check in the lookup
+
+kapag wala it is an identifier
+
+check if it is a valid identifier if not then just new Tokenizer it
+
+
