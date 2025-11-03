@@ -1,5 +1,5 @@
-import java.util.List; 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lexer{
     public static List<String> tokens = new ArrayList<>();
@@ -137,46 +137,33 @@ public class Lexer{
                 continue;
             }
 
-            // Detect operators
-            String operatorChars = "+-*/%=<>!";
-            if (operatorChars.indexOf(ch) != -1) {
 
-                StringBuilder operator = new StringBuilder();
-                operator.append(ch);
+            
+            // Detect numbers (int and float)
+            if (Character.isDigit(ch)) {
+                StringBuilder numberBuilder = new StringBuilder();
+                boolean isFloat = false;
 
-            // Detect operators
-            String operatorChars = "+-*/%=<>!";
-            if (operatorChars.indexOf(ch) != -1) {
-
-                StringBuilder operator = new StringBuilder();
-                operator.append(ch);
-
-                // Check for two-character operators
-                if (i + 1 < code.length()) {
-                    char next = code.charAt(i + 1);
-                    if ((ch == '=' && next == '=') ||
-                        (ch == '!' && next == '=') ||
-                        (ch == '<' && next == '=') ||
-                        (ch == '>' && next == '=') ||
-                        (ch == '*' && next == '*')) {
-                        operator.append(next);
+                while (i < code.length()) {
+                    char curr = code.charAt(i);
+                    if (Character.isDigit(curr)) {
+                        numberBuilder.append(curr);
                         i++;
+                    } else if (curr == '.' && !isFloat && i + 1 < code.length() && Character.isDigit(code.charAt(i + 1))) {
+                        isFloat = true;
+                        numberBuilder.append(curr);
+                        i++;
+                    } else {
+                        break;
                     }
                 }
 
-                String lexeme = operator.toString();
-                String token = LookupTable.getTokenType(lexeme);
-
+                String lexeme = numberBuilder.toString();
+                String token = isFloat ? "FLOAT" : "INT";
                 tokens.add(new Tokenizer(token, lexeme).toString());
-                i++;
-
-                // System.out.print("Lexeme: " + lexeme);
-                // System.out.print("Token: " + token);
-
                 continue;
             }
             
-            // TODO: handle identifiers, numbers, etc.
             i++;
         }
     }
