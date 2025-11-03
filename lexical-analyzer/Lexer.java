@@ -42,14 +42,11 @@ public class Lexer{
                 tokens.add(new Tokenizer(token, lexeme).toString());
                 i++;
 
-                // System.out.print("Lexeme: " + lexeme);
-                // System.out.print("Token: " + token);
-
                 continue;
             }
             
             // Handle identifiers
-                if (Character.isLetter(ch)) {
+            if (Character.isLetter(ch)) {
                     StringBuilder lexemeBuilder = new StringBuilder();
 
                     // Collect possible identifier characters
