@@ -40,6 +40,21 @@ public class LookupTable {
         lookupTable.put("truefalse", "BOOLEAN_TYPE");
         lookupTable.put("text", "STRING_TYPE");
         lookupTable.put("list", "LIST_TYPE");
+        lookupTable.put("give", "RETURN_STATEMENT");
+
+        // Delimeters
+        lookupTable.put(";", "STATEMENT_TERMINATOR");
+        lookupTable.put(",", "LIST_SEPARATOR");
+        lookupTable.put("=", "ASSIGNMENT_OP");
+        lookupTable.put("(", "LEFT_PARENTHESIS");
+        lookupTable.put(")", "RIGHT_PARENTHESIS");
+        lookupTable.put("[", "LEFT_SQUARE_BRACKET");
+        lookupTable.put("]", "RIGHT_SQUARE_BRACKET");
+        lookupTable.put("{", "LEFT_CURLY_BRACE");
+        lookupTable.put("}", "RIGHT_CURLY_BRACE");
+        lookupTable.put("\"", "DOUBLE_QUOTE");
+        lookupTable.put("'", "SINGLE_QUOTE");
+        lookupTable.put(":", "KEY_VALUE_SEPARATOR");
 
         // noise words
         String[] noiseWords = {"then", "start", "end", "so"};
@@ -65,5 +80,5 @@ public class LookupTable {
         if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
             return "IDENTIFIER";
         }
+    }
 }
-
