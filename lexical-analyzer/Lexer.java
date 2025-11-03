@@ -10,28 +10,37 @@ public class Lexer{
         while (i < code.length()) {
             char ch = code.charAt(i);
 
-            // Check for invalid characters
-            if (ch > 127){
-                tokens.add(new Tokenizer("INVALID", String.valueOf(ch)).toString());
-                i++;
-
-                continue;
-            }
-
-            // This won't work for this will check evry char
-            // // Handle special characters
-            // if (LookupTable.getTokenType(String.valueOf(ch)) == null){
-            //     tokens.add(new Tokenizer("SPECIAL_CHAR", String.valueOf(ch)).toString());
-            //     i++;
-
-            //     continue;
-            // }
-
             // Skip whitespace
             if (Character.isWhitespace(ch)) {
                 i++;
                 continue;
             }
+
+            // Check for invalid characters
+            if (ch > 127){
+                tokens.add(new Tokenizer("INVALID_CHAR", String.valueOf(ch)).toString());
+                i++;
+
+                continue;
+            }
+
+            
+            if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
+                String symbol = String.valueOf(ch);
+                String tokenType = LookupTable.getTokenType(symbol);
+
+                if (tokenType == null) {
+                    // Detects any non-alphanumeric, non-space character (like '.', '?', etc.)
+                    tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
+                } else {
+                    // Use the lookup table if it’s a known symbol
+                    tokens.add(new Tokenizer(tokenType, symbol).toString());
+                }
+
+                i++;
+                continue;
+            }
+
 
             // Detect operators
             String operatorChars = "+-*/%=<>!";
@@ -99,10 +108,6 @@ public class Lexer{
 
 
 
-
-
-
-                
             // Strings (double-quoted)
             if (ch == '"') {
                 StringBuilder stringBuilder = new StringBuilder();
