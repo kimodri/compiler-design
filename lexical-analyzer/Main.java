@@ -21,6 +21,9 @@ public class Main {
         // Convert to a single string
         String code = content.toString();
 
+        // Clear symbol table before lexing
+        SymbolTable.clear();
+
         // Call the lexer
         Lexer.lex(code);
         System.out.println(code);
@@ -29,17 +32,27 @@ public class Main {
             System.out.println(token);
         }
 
-        // write to a file
-        // try (BufferedWriter writer = new BufferedWriter(new FileWriter("tokens_output.txt"))){
-        //     writer.write("TOKEN, LEXEME");
+        // Write tokens and symbol table to output file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("../output.txt"))) {
+            writer.write("=== SOURCE CODE ===\n");
+            writer.write(code);
+            writer.write("\n=== TOKENS ===\n");
             
-        //     for (String token : Lexer.tokens) {
-        //         writer.write(token);
-        //     }
-        //     System.out.println("Succesfully written to tokens_output.txt!");
-        // }
-        // catch (IOException e){
-        //     e.printStackTrace();
-        // }
+            for (String token : Lexer.tokens) {
+                writer.write(token);
+                writer.write("\n");
+            }
+            
+            writer.write("\n=== SYMBOL TABLE ===\n");
+            writer.write("NAME, TYPE, LINE_NUMBER\n");
+            for (SymbolTable.Symbol symbol : SymbolTable.symbols.values()) {
+                writer.write(symbol.toString());
+                writer.write("\n");
+            }
+            
+            System.out.println("Successfully written to output.txt!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

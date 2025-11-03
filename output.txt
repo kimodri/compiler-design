@@ -1,0 +1,108 @@
+=== SOURCE CODE ===
+8+9==89 
+! * == != <= 98.0
+>= / %**
+
+.
+
+.
+.0
+
+()
+)))
+{'/';}
+
+++
+
+Kim Au*)drey Magan **
+
+// mali rin yung with 
+
+lan@g
+
+
+À
+
+^
+
+and or not symbol number decimals truefalse end then 
+
+=== TOKENS ===
+INT_LITERAL, 8
+ADD_OP, +
+INT_LITERAL, 9
+EQUALITY_OP, ==
+INT_LITERAL, 89
+NOT_OP, !
+MULTIPLY_OP, *
+EQUALITY_OP, ==
+INEQUALITY_OP, !=
+LESS_EQUAL_OP, <=
+FLOAT_LITERAL, 98.0
+GREATER_EQUAL_OP, >=
+DIVIDE_OP, /
+MODULO_OP, %
+null, **
+SPECIAL_CHAR, .
+SPECIAL_CHAR, .
+SPECIAL_CHAR, .
+INT_LITERAL, 0
+LEFT_PARENTHESIS, (
+RIGHT_PARENTHESIS, )
+RIGHT_PARENTHESIS, )
+RIGHT_PARENTHESIS, )
+RIGHT_PARENTHESIS, )
+LEFT_CURLY_BRACE, {
+CHAR, '/'
+STATEMENT_TERMINATOR, ;
+RIGHT_CURLY_BRACE, }
+INCREMENT_OP, ++
+IDENTIFIER, Kim
+IDENTIFIER, Au
+MULTIPLY_OP, *
+RIGHT_PARENTHESIS, )
+IDENTIFIER, drey
+IDENTIFIER, Magan
+null, **
+DIVIDE_OP, /
+DIVIDE_OP, /
+IDENTIFIER, mali
+IDENTIFIER, rin
+IDENTIFIER, yung
+IDENTIFIER, with
+IDENTIFIER, lan
+SPECIAL_CHAR, @
+IDENTIFIER, g
+INVALID_CHAR, À
+EXPONENT_OP, ^
+AND_OP, and
+OR_OP, or
+NOT_OP, not
+SYMBOL_TYPE, symbol
+NUMBER_TYPE, number
+IDENTIFIER, decimals
+BOOLEAN_TYPE, truefalse
+NOISE_WORD, end
+NOISE_WORD, then
+
+=== SYMBOL TABLE ===
+NAME, TYPE, LINE_NUMBER
+Kim, IDENTIFIER, 1
+Au, IDENTIFIER, 1
+drey, IDENTIFIER, 1
+Magan, IDENTIFIER, 1
+mali, IDENTIFIER, 1
+rin, IDENTIFIER, 1
+yung, IDENTIFIER, 1
+with, IDENTIFIER, 1
+lan, IDENTIFIER, 1
+g, IDENTIFIER, 1
+and, KEYWORD, 1
+or, KEYWORD, 1
+not, KEYWORD, 1
+symbol, KEYWORD, 1
+number, KEYWORD, 1
+decimals, IDENTIFIER, 1
+truefalse, KEYWORD, 1
+end, KEYWORD, 1
+then, KEYWORD, 1

@@ -46,9 +46,13 @@ public class Lexer{
                     String token = LookupTable.getTokenType(lexeme);
                     if (token != null && !token.equals("INVALID") && !token.equals("INVALID_DELIMITER")) {  // Added check for INVALID_DELIMITER
                         tokens.add(new Tokenizer(token, lexeme).toString());
+                        // Add keyword to symbol table
+                        SymbolTable.addKeyword(lexeme);
                     } else {
                         // Default to IDENTIFIER for valid, unmapped lexemes
                         tokens.add(new Tokenizer("IDENTIFIER", lexeme).toString());
+                        // Add identifier to symbol table
+                        SymbolTable.addIdentifier(lexeme);
                     }
                     continue;
                 }
