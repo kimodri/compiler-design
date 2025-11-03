@@ -26,6 +26,9 @@ public class LookupTable {
         lookupTable.put("or", "OR_OP");
         lookupTable.put("not", "NOT_OP");
 
+        // Assignment
+        lookupTable.put("=", "ASSIGN_OP");
+
         // Keyword
         lookupTable.put("if", "IF_STMT");
         lookupTable.put("elif", "ELIF_STMT");
@@ -68,6 +71,17 @@ public class LookupTable {
         // comments
         lookupTable.put("~~", "SINGLE_LINE_COMMENT");
         lookupTable.put("~", "MULTILINE_COMMENT");
+
+        // delimiters
+        lookupTable.put("(", "LPAREN");
+        lookupTable.put(")", "RPAREN");
+        lookupTable.put("[", "LBRACKET");
+        lookupTable.put("]", "RBRACKET");
+        lookupTable.put("{", "LBRACE");
+        lookupTable.put("}", "RBRACE");
+        lookupTable.put(",", "COMMA");
+        lookupTable.put(";", "SEMICOLON");
+        lookupTable.put(":", "COLON");
 
     }
 
