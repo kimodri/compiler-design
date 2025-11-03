@@ -136,8 +136,6 @@ public class Lexer{
                 }
                 continue;
             }
-
-
             
             // Detect numbers (int and float)
             if (Character.isDigit(ch)) {

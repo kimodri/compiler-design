@@ -65,8 +65,5 @@ public class LookupTable {
         if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
             return "IDENTIFIER";
         }
-
-        return "INVALID_TOKEN";
-    }
 }
 

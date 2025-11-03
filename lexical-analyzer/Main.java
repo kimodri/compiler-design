@@ -17,12 +17,12 @@ public class Main {
 
         // Convert to a single string
         String code = content.toString();
-        
+
         // Call the lexer
         Lexer.lex(code);
-
         System.out.println(code);
-        for (String token: Lexer.tokens){
+
+        for (String token : Lexer.tokens) {
             System.out.println(token);
         }
     }
