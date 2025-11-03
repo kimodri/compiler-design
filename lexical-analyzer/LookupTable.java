@@ -56,6 +56,7 @@ public class LookupTable {
 
     }
 
+<<<<<<< Updated upstream
         public static String getTokenType(String symbol) {
             if (lookupTable.containsKey(symbol)) {
                 return lookupTable.get(symbol);
@@ -69,4 +70,10 @@ public class LookupTable {
 
             return "INVALID_TOKEN";
         }
+=======
+    public static String getTokenType(String symbol){
+        String result = lookupTable.get(symbol);
+        return result != null ? result : "INVALID";
+    }
+>>>>>>> Stashed changes
 }
