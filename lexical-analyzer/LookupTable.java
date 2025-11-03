@@ -66,7 +66,7 @@ public class LookupTable {
                 return "IDENTIFIER";
             }
 
-            System.err.println("Invalid token '" + symbol + "'");
+
             return "INVALID_TOKEN";
         }
 }
