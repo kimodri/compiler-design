@@ -23,17 +23,29 @@ public class Lexer{
                 continue;
             }
 
-            // Check for special characters
+           // Check for special characters
             if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
                 String symbol = String.valueOf(ch);
 
                 // Check if '.' is used in a float (digit before and after)
                 if (ch == '.') {
-                    boolean hasDigitBefore = i > 0 && Character.isDigit(code.charAt(i - 1));
-                    boolean hasDigitAfter = i < code.length() - 1 && Character.isDigit(code.charAt(i + 1));
+                    boolean hasDigitBefore = (i > 0) && Character.isDigit(code.charAt(i - 1));
+                    boolean hasDigitAfter = (i + 1 < code.length()) && Character.isDigit(code.charAt(i + 1));
 
                     if (hasDigitBefore && hasDigitAfter) {
                         // Part of a float number → skip classification here
+                        i++;
+                        continue;
+                    }
+                }
+
+                // Check if '_' is part of an identifier (letter/digit before or after)
+                if (ch == '_') {
+                    boolean hasLetterOrDigitBefore = (i > 0) && Character.isLetterOrDigit(code.charAt(i - 1));
+                    boolean hasLetterOrDigitAfter = (i + 1 < code.length()) && Character.isLetterOrDigit(code.charAt(i + 1));
+
+                    if (hasLetterOrDigitBefore || hasLetterOrDigitAfter) {
+                        // Part of an identifier → skip classification here
                         i++;
                         continue;
                     }
@@ -49,6 +61,7 @@ public class Lexer{
                 i++;
                 continue;
             }
+
 
             // Detect operators
             String operatorChars = "+-*/%=<>!";
@@ -80,39 +93,29 @@ public class Lexer{
                 continue;
             }
             
-            // Handle identifiers
             if (Character.isLetter(ch)) {
-                StringBuilder lexemeBuilder = new StringBuilder();
+                StringBuilder identifier = new StringBuilder();
 
-                    // Collect possible identifier characters
-                    while (i < code.length()) {
-                        char curr = code.charAt(i);
-                        if (Character.isLetterOrDigit(curr) || curr == '_') {
-                            lexemeBuilder.append(curr);
-                            i++;
-                        } else {
-                            break;
-                        }
-                    }
-
-                    String lexeme = lexemeBuilder.toString();
-
-                    // Apply identifier validation rules
-                    String identifierPattern = "^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$";
-                    if (!lexeme.matches(identifierPattern)) {
-                        throw new RuntimeException("Invalid identifier: '" + lexeme + "'");
-                    }
-
-                    // Check against reserved keywords
-                    String token = LookupTable.getTokenType(lexeme);
-                    if (token.equals("IDENTIFIER")) {
-                        tokens.add(new Tokenizer("IDENTIFIER", lexeme).toString());
-                    } else {
-                        tokens.add(new Tokenizer(token, lexeme).toString());
-                    }
-
-                    continue;
+                while (i < code.length() && 
+                    (Character.isLetterOrDigit(code.charAt(i)) || code.charAt(i) == '_')) {
+                    identifier.append(code.charAt(i));
+                    i++;
                 }
+
+                String word = identifier.toString();
+
+                if (LookupTable.getTokenType(word) != null) {
+                    tokens.add(new Tokenizer(LookupTable.getTokenType(word), word).toString());
+                } else {
+                    // Check first if valid
+                    String identifierPattern = "^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$";
+                    if (!word.matches(identifierPattern)) {
+                        tokens.add(new Tokenizer("Invalid identifier", word).toString());
+                    }
+                    tokens.add(new Tokenizer("IDENTIFIER", word).toString());
+                }
+                continue;
+        }
 
             // Debug this
             // Strings (double-quoted)
