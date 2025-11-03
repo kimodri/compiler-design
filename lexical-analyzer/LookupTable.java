@@ -10,8 +10,9 @@ public class LookupTable {
         lookupTable.put("*", "MULTIPLY_OP");
         lookupTable.put("/", "DIVIDE_OP");
         lookupTable.put("%", "MODULO_OP");
-        lookupTable.put("**", "EXPONENT_OP");
+        lookupTable.put("^", "EXPONENT_OP");
         lookupTable.put("!", "NOT_OP");
+        lookupTable.put("//", "FLOORDIV_OP");
         lookupTable.put("++", "INCREMENT_OP");
 
         // Relational Operators

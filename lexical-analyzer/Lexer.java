@@ -20,11 +20,10 @@ public class Lexer{
             if (ch > 127){
                 tokens.add(new Tokenizer("INVALID_CHAR", String.valueOf(ch)).toString());
                 i++;
-
                 continue;
             }
 
-            
+            // Check for special characters
             if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
                 String symbol = String.valueOf(ch);
 
@@ -41,9 +40,6 @@ public class Lexer{
                 }
 
                 String tokenType = LookupTable.getTokenType(symbol);
-                System.out.println(ch);
-                System.out.println(tokenType);
-
                 if (tokenType == null) {
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
                 } else {
@@ -53,7 +49,6 @@ public class Lexer{
                 i++;
                 continue;
             }
-
 
             // Detect operators
             String operatorChars = "+-*/%=<>!";
@@ -69,8 +64,8 @@ public class Lexer{
                         (ch == '!' && next == '=') ||
                         (ch == '<' && next == '=') ||
                         (ch == '>' && next == '=') ||
-                        (ch == '+' && next == '+') ||
-                        (ch == '*' && next == '*')) {
+                        (ch == '/' && next == '/') ||
+                        (ch == '+' && next == '+')) {
                         operator.append(next);
                         i++;
                     }
@@ -119,8 +114,7 @@ public class Lexer{
                     continue;
                 }
 
-
-
+            // Debug this
             // Strings (double-quoted)
             if (ch == '"') {
                 StringBuilder stringBuilder = new StringBuilder();
@@ -154,6 +148,7 @@ public class Lexer{
                 continue;
             }
             
+            // Debug this
             // Chars/Symbols (single-quoted)
             if (ch == '\'') {
                 StringBuilder charBuilder = new StringBuilder();
