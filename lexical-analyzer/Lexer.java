@@ -27,13 +27,26 @@ public class Lexer{
             
             if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
                 String symbol = String.valueOf(ch);
+
+                // Check if '.' is used in a float (digit before and after)
+                if (ch == '.') {
+                    boolean hasDigitBefore = i > 0 && Character.isDigit(code.charAt(i - 1));
+                    boolean hasDigitAfter = i < code.length() - 1 && Character.isDigit(code.charAt(i + 1));
+
+                    if (hasDigitBefore && hasDigitAfter) {
+                        // Part of a float number → skip classification here
+                        i++;
+                        continue;
+                    }
+                }
+
                 String tokenType = LookupTable.getTokenType(symbol);
+                System.out.println(ch);
+                System.out.println(tokenType);
 
                 if (tokenType == null) {
-                    // Detects any non-alphanumeric, non-space character (like '.', '?', etc.)
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
                 } else {
-                    // Use the lookup table if it’s a known symbol
                     tokens.add(new Tokenizer(tokenType, symbol).toString());
                 }
 

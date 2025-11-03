@@ -87,7 +87,7 @@ public class LookupTable {
 
     public static String getTokenType(String symbol){
         String result = lookupTable.get(symbol);
-        return result != null ? result : "INVALID";
+        return result;
     }
 
     // I really don't get this
