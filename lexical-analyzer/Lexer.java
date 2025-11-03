@@ -20,8 +20,38 @@ public class Lexer{
             if (ch > 127){
                 tokens.add(new Tokenizer("INVALID_CHAR", String.valueOf(ch)).toString());
                 i++;
+
                 continue;
             }
+            // Handle Identifiers
+            if (Character.isLetter(ch)) {
+                    StringBuilder lexemeBuilder = new StringBuilder();
+                    // Collect possible identifier characters
+                    while (i < code.length()) {
+                        char curr = code.charAt(i);
+                        if (Character.isLetterOrDigit(curr) || curr == '_') {
+                            lexemeBuilder.append(curr);
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    String lexeme = lexemeBuilder.toString();
+                    // Apply identifier validation rules
+                    String identifierPattern = "^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$";
+                        if (!lexeme.matches(identifierPattern)) {
+                            throw new RuntimeException("Invalid identifier: '" + lexeme + "'");
+                        }
+                    // Check against reserved keywords
+                    String token = LookupTable.getTokenType(lexeme);
+                    if (token != null && !token.equals("INVALID") && !token.equals("INVALID_DELIMITER")) {  // Added check for INVALID_DELIMITER
+                        tokens.add(new Tokenizer(token, lexeme).toString());
+                    } else {
+                        // Default to IDENTIFIER for valid, unmapped lexemes
+                        tokens.add(new Tokenizer("IDENTIFIER", lexeme).toString());
+                    }
+                    continue;
+                }
 
            // Check for special characters
             if (!Character.isLetterOrDigit(ch) && !Character.isWhitespace(ch)) {
@@ -52,6 +82,9 @@ public class Lexer{
                 }
 
                 String tokenType = LookupTable.getTokenType(symbol);
+                System.out.println(ch);
+                System.out.println(tokenType);
+
                 if (tokenType == null) {
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
                     i++;
@@ -78,8 +111,8 @@ public class Lexer{
                         (ch == '!' && next == '=') ||
                         (ch == '<' && next == '=') ||
                         (ch == '>' && next == '=') ||
-                        (ch == '/' && next == '/') ||
-                        (ch == '+' && next == '+')) {
+                        (ch == '+' && next == '+') ||
+                        (ch == '*' && next == '*')) {
                         operator.append(next);
                         i++;
                     }
@@ -118,7 +151,6 @@ public class Lexer{
                 continue;
         }
 
-            // Debug this
             // Strings (double-quoted)
             if (ch == '"') {
                 StringBuilder stringBuilder = new StringBuilder();
@@ -152,7 +184,6 @@ public class Lexer{
                 continue;
             }
             
-            // Debug this
             // Chars/Symbols (single-quoted)
             if (ch == '\'') {
                 StringBuilder charBuilder = new StringBuilder();
