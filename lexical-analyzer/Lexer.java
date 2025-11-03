@@ -82,6 +82,73 @@ public class Lexer{
                     continue;
                 }
 
+            // Strings (double-quoted)
+            if (ch == '"') {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(ch);
+                i++;
+                boolean foundClosing = false;
+                
+                while (i < code.length()) {
+                    char curr = code.charAt(i);
+                    if (curr == '\\' && i + 1 < code.length()) {
+                        stringBuilder.append(curr);
+                        stringBuilder.append(code.charAt(i + 1));
+                        i += 2;
+                    } else if (curr == '"') {
+                        stringBuilder.append(curr);
+                        foundClosing = true;
+                        i++;
+                        break;
+                    } else {
+                        stringBuilder.append(curr);
+                        i++;
+                    }
+                }
+                
+                if (!foundClosing) {
+                    throw new RuntimeException("Syntax Error: Unclosed string literal.");
+                }
+                
+                String lexeme = stringBuilder.toString();
+                tokens.add(new Tokenizer("STRING", lexeme).toString());
+                continue;
+            }
+            
+            // Chars/Symbols (single-quoted)
+            if (ch == '\'') {
+                StringBuilder charBuilder = new StringBuilder();
+                charBuilder.append(ch);
+                i++;
+                boolean foundClosing = false;
+                
+                if (i < code.length()) {
+                    char curr = code.charAt(i);
+                    if (curr == '\\' && i + 1 < code.length()) {
+                        charBuilder.append(curr);
+                        charBuilder.append(code.charAt(i + 1));
+                        i += 2;
+                    } else {
+                        charBuilder.append(curr);
+                        i++;
+                    }
+                }
+                
+                if (i < code.length() && code.charAt(i) == '\'') {
+                    charBuilder.append(code.charAt(i));
+                    foundClosing = true;
+                    i++;
+                }
+                
+                if (!foundClosing) {
+                    throw new RuntimeException("Syntax Error: Unclosed char literal.");
+                }
+                
+                String lexeme = charBuilder.toString();
+                tokens.add(new Tokenizer("CHAR", lexeme).toString());
+                continue;
+            }
+
             // Single-line comment
             if (ch == '~' && i + 1 < code.length() && code.charAt(i + 1) == '~') {
                 String lexeme = "~~";
@@ -161,6 +228,27 @@ public class Lexer{
                 String lexeme = numberBuilder.toString();
                 String token = isFloat ? "FLOAT" : "INT";
                 tokens.add(new Tokenizer(token, lexeme).toString());
+                continue;
+            }
+            
+            // Delimiters (brackets, separators)
+            String delimiterChars = "()[]{},;:";
+            if (delimiterChars.indexOf(ch) != -1) {
+                String lexeme = String.valueOf(ch);
+                String token = "";
+                
+                if (ch == '(') token = "LPAREN";
+                else if (ch == ')') token = "RPAREN";
+                else if (ch == '[') token = "LBRACKET";
+                else if (ch == ']') token = "RBRACKET";
+                else if (ch == '{') token = "LBRACE";
+                else if (ch == '}') token = "RBRACE";
+                else if (ch == ',') token = "COMMA";
+                else if (ch == ';') token = "SEMICOLON";
+                else if (ch == ':') token = "COLON";
+                
+                tokens.add(new Tokenizer(token, lexeme).toString());
+                i++;
                 continue;
             }
             

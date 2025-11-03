@@ -1,0 +1,1 @@
+public class TestAll { public static void main(String[] args) { String code = "display(\"Hello\", 'A'); if x > 5 {y = 3.14;}"; Lexer.lex(code); for (String token : Lexer.tokens) { System.out.println(token); } } }  
