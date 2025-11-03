@@ -56,18 +56,14 @@ public class LookupTable {
 
     }
 
-        public static String getTokenType(String symbol) {
-            if (lookupTable.containsKey(symbol)) {
-                return lookupTable.get(symbol);
-            }
+    public static String getTokenType(String symbol) {
+        if (lookupTable.containsKey(symbol)) {
+            return lookupTable.get(symbol);
+        }
 
-            // Valid identifier: starts with letter, may include digits or single underscores, up to 64 chars
-            if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
-                return "IDENTIFIER";
-            }
-
-
-            return "INVALID_TOKEN";
+        // Valid identifier: starts with letter, may include digits or single underscores, up to 64 chars
+        if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
+            return "IDENTIFIER";
         }
 }
 
