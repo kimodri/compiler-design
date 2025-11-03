@@ -10,6 +10,22 @@ public class Lexer{
         while (i < code.length()) {
             char ch = code.charAt(i);
 
+            // Check for invalid characters
+            if (ch > 127){
+                tokens.add(new Tokenizer("INVALID", String.valueOf(ch)).toString());
+                i++;
+
+                continue;
+            }
+
+            // Handle special characters
+            if (LookupTable.getTokenType(ch) == null){
+                tokens.add(new Tokenizer("SPECIAL_CHAR", String.valueOf(ch)).toString());
+                i++;
+
+                continue;
+            }
+
             // Skip whitespace
             if (Character.isWhitespace(ch)) {
                 i++;
@@ -47,7 +63,7 @@ public class Lexer{
             
             // Handle identifiers
             if (Character.isLetter(ch)) {
-                    StringBuilder lexemeBuilder = new StringBuilder();
+                StringBuilder lexemeBuilder = new StringBuilder();
 
                     // Collect possible identifier characters
                     while (i < code.length()) {
