@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         StringBuilder content = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("../sample_operation.stn"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("../sample_operation.lexc"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line).append(System.lineSeparator());
@@ -25,21 +25,21 @@ public class Main {
         Lexer.lex(code);
         System.out.println(code);
 
-        // for (String token : Lexer.tokens) {
-        //     System.out.println(token);
-        // }
+        for (String token : Lexer.tokens) {
+            System.out.println(token);
+        }
 
         // write to a file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("tokens_output.txt"))){
-            writer.write("TOKEN, LEXEME")
+        // try (BufferedWriter writer = new BufferedWriter(new FileWriter("tokens_output.txt"))){
+        //     writer.write("TOKEN, LEXEME");
             
-            for (String token : Lexer.tokens) {
-                writer.write(token);
-            }
-            System.out.println("Succesfully written to tokens_output.txt!");
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        //     for (String token : Lexer.tokens) {
+        //         writer.write(token);
+        //     }
+        //     System.out.println("Succesfully written to tokens_output.txt!");
+        // }
+        // catch (IOException e){
+        //     e.printStackTrace();
+        // }
     }
 }

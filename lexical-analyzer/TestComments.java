@@ -1,1 +1,1 @@
-public class TestComments { public static void main(String[] args) { String code = "x = 5; ~~ single line\ny = 10; ~ multi\nline ~"; Lexer.lex(code); for (String token : Lexer.tokens) { System.out.println(token); } } }  
+public class TestComments { public static void main(String[] args) { String code = "....."; Lexer.lex(code); for (String token : Lexer.tokens) { System.out.println(token); } } }  

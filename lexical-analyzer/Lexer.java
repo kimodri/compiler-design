@@ -18,13 +18,14 @@ public class Lexer{
                 continue;
             }
 
-            // Handle special characters
-            if (LookupTable.getTokenType(ch) == null){
-                tokens.add(new Tokenizer("SPECIAL_CHAR", String.valueOf(ch)).toString());
-                i++;
+            // This won't work for this will check evry char
+            // // Handle special characters
+            // if (LookupTable.getTokenType(String.valueOf(ch)) == null){
+            //     tokens.add(new Tokenizer("SPECIAL_CHAR", String.valueOf(ch)).toString());
+            //     i++;
 
-                continue;
-            }
+            //     continue;
+            // }
 
             // Skip whitespace
             if (Character.isWhitespace(ch)) {
@@ -46,6 +47,7 @@ public class Lexer{
                         (ch == '!' && next == '=') ||
                         (ch == '<' && next == '=') ||
                         (ch == '>' && next == '=') ||
+                        (ch == '+' && next == '+') ||
                         (ch == '*' && next == '*')) {
                         operator.append(next);
                         i++;
@@ -95,6 +97,12 @@ public class Lexer{
                     continue;
                 }
 
+
+
+
+
+
+                
             // Strings (double-quoted)
             if (ch == '"') {
                 StringBuilder stringBuilder = new StringBuilder();
@@ -237,7 +245,7 @@ public class Lexer{
                 }
 
                 String lexeme = numberBuilder.toString();
-                String token = isFloat ? "FLOAT" : "INT";
+                String token = isFloat ? "FLOAT_LITERAL" : "INT_LITERAL";
                 tokens.add(new Tokenizer(token, lexeme).toString());
                 continue;
             }
@@ -245,22 +253,17 @@ public class Lexer{
             // Delimiters (brackets, separators)
             String delimiterChars = "()[]{},;:";
             if (delimiterChars.indexOf(ch) != -1) {
+                
                 String lexeme = String.valueOf(ch);
-                String token = "";
                 
-                if (ch == '(') token = "LPAREN";
-                else if (ch == ')') token = "RPAREN";
-                else if (ch == '[') token = "LBRACKET";
-                else if (ch == ']') token = "RBRACKET";
-                else if (ch == '{') token = "LBRACE";
-                else if (ch == '}') token = "RBRACE";
-                else if (ch == ',') token = "COMMA";
-                else if (ch == ';') token = "SEMICOLON";
-                else if (ch == ':') token = "COLON";
-                
+                String token = LookupTable.getTokenType(lexeme);
+
                 tokens.add(new Tokenizer(token, lexeme).toString());
+                
                 i++;
+
                 continue;
+                
             }
             
             i++;

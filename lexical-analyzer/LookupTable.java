@@ -12,6 +12,7 @@ public class LookupTable {
         lookupTable.put("%", "MODULO_OP");
         lookupTable.put("**", "EXPONENT_OP");
         lookupTable.put("!", "NOT_OP");
+        lookupTable.put("++", "INCREMENT_OP");
 
         // Relational Operators
         lookupTable.put("==", "EQUALITY_OP");
@@ -35,7 +36,7 @@ public class LookupTable {
         lookupTable.put("else", "ELSE_STMT");
         lookupTable.put("repeat", "WHILE_LOOP");
         lookupTable.put("repeatfor", "FOR_LOOP");
-        lookupTable.put("stop", "BREAK_STMT");
+        lookupTable.put("stop", "LOOP_BREAK_STMT");
         lookupTable.put("display", "DISPLAY_FUNC");
         lookupTable.put("number", "NUMBER_TYPE");
         lookupTable.put("decimal", "DECIMAL_TYPE");
@@ -44,6 +45,20 @@ public class LookupTable {
         lookupTable.put("text", "STRING_TYPE");
         lookupTable.put("list", "LIST_TYPE");
         lookupTable.put("give", "RETURN_STATEMENT");
+        lookupTable.put("true", "BOOL_LITERAL");
+        lookupTable.put("false", "BOOL_LITERAL");
+        lookupTable.put("nothing", "NULL_LITERAL");
+        lookupTable.put("continue", "LOOP_SKIP_STMT");
+        lookupTable.put("function", "FUNCTION_DECLR");
+        lookupTable.put("give", "RETURN_STMT");
+        lookupTable.put("static", "FUNC_MODFR");
+        lookupTable.put("get", "GET_FUNC");
+        lookupTable.put("include", "INCLUDE_RSRV");
+        lookupTable.put("try", "TRY_RSRV");
+        lookupTable.put("bundle", "BUNDLE_RSRV");
+        lookupTable.put("void", "VOID_RSRV");
+        lookupTable.put("in", "IN_RSRV");
+
 
         // Delimeters
         lookupTable.put(";", "STATEMENT_TERMINATOR");
@@ -65,34 +80,26 @@ public class LookupTable {
             lookupTable.put(noiseWord, "NOISE_WORD");
         }
 
-        // reserved words
-        lookupTable.put("nothing", "NOTHING_TYPE");
-
         // comments
         lookupTable.put("~~", "SINGLE_LINE_COMMENT");
         lookupTable.put("~", "MULTILINE_COMMENT");
-
-        // delimiters
-        lookupTable.put("(", "LPAREN");
-        lookupTable.put(")", "RPAREN");
-        lookupTable.put("[", "LBRACKET");
-        lookupTable.put("]", "RBRACKET");
-        lookupTable.put("{", "LBRACE");
-        lookupTable.put("}", "RBRACE");
-        lookupTable.put(",", "COMMA");
-        lookupTable.put(";", "SEMICOLON");
-        lookupTable.put(":", "COLON");
-
     }
 
-    public static String getTokenType(String symbol) {
-        if (lookupTable.containsKey(symbol)) {
-            return lookupTable.get(symbol);
-        }
-
-        // Valid identifier: starts with letter, may include digits or single underscores, up to 64 chars
-        if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
-            return "IDENTIFIER";
-        }
+    public static String getTokenType(String symbol){
+        String result = lookupTable.get(symbol);
+        return result != null ? result : "INVALID";
     }
+
+    // I really don't get this
+
+    // public static String getTokenType(String symbol) {
+    //     if (lookupTable.containsKey(symbol)) {
+    //         return lookupTable.get(symbol);
+    //     }
+
+    //     // Valid identifier: starts with letter, may include digits or single underscores, up to 64 chars
+    //     if (symbol.matches("^[A-Za-z](?:_?[A-Za-z0-9]){0,63}$")) {
+    //         return "IDENTIFIER";
+    //     }
+    // }
 }
