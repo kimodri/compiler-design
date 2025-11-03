@@ -172,16 +172,13 @@ public class Lexer{
 
             // Single-line comment
             if (ch == '~' && i + 1 < code.length() && code.charAt(i + 1) == '~') {
-                String lexeme = "~~";
-                String token = LookupTable.getTokenType(lexeme);
-                tokens.add(new Tokenizer(token, lexeme).toString());
-                
+                int start = i;
                 i += 2;
-                // Skip until end of line
                 while (i < code.length() && code.charAt(i) != '\n' && code.charAt(i) != '\r') {
                     i++;
                 }
-                
+                String lexeme = code.substring(start, i);
+                tokens.add(new Tokenizer("SINGLE_LINE_COMMENT", lexeme).toString());
                 if (i < code.length() && code.charAt(i) == '\r') {
                     i++;
                 }
@@ -193,14 +190,9 @@ public class Lexer{
 
             // Multi-line comment
             if (ch == '~') {
-                int commentStart = i; // Track where comment started for error reporting
-                String lexeme = "~";
-                String token = LookupTable.getTokenType(lexeme);
-                tokens.add(new Tokenizer(token, lexeme).toString());
-                
+                int commentStart = i;
                 i++;
                 boolean foundClosing = false;
-                // Skip until closing '~'
                 while (i < code.length()) {
                     if (code.charAt(i) == '~') {
                         foundClosing = true;
@@ -209,18 +201,14 @@ public class Lexer{
                     }
                     i++;
                 }
-                if (!foundClosing) {
-                    int lineNumber = 1;
-                    int colNumber = 1;
-                    for (int j = 0; j < commentStart; j++) {
-                        if (code.charAt(j) == '\n') {
-                            lineNumber++;
-                            colNumber = 1;
-                        } else if (code.charAt(j) != '\r') {
-                            colNumber++;
-                        }
-                    }
-                    throw new RuntimeException("Syntax Error: Unclosed multi-line comment starting at line " + lineNumber + ", column " + colNumber + ". Expected closing '~'.");
+                if (foundClosing) {
+                    String lexeme = code.substring(commentStart, i);
+                    String displayLexeme = lexeme.replace("\r", "\\r").replace("\n", "\\n");
+                    tokens.add(new Tokenizer("MULTILINE_COMMENT", displayLexeme).toString());
+                } else {
+                    String invalidLexeme = code.substring(commentStart, i);
+                    String displayLexeme = invalidLexeme.replace("\r", "\\r").replace("\n", "\\n");
+                    tokens.add(new Tokenizer("INVALID_COMMENT", displayLexeme).toString());
                 }
                 continue;
             }
