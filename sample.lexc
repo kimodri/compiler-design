@@ -1,0 +1,64 @@
+~~Identifiers
+kimAudreyMagan
+Mapag_mahal_25
+_kim
+
+~~Keywords
+number
+decimal
+symbol 
+truefalse 
+text 
+list 
+true 
+false 
+nothing 
+if 
+elif 
+else 
+repeat 
+repeatfor 
+continue
+function
+give
+static
+and 
+or 
+not 
+display 
+get 
+onfail 
+include 
+try 
+bundle 
+void 
+in 
+then 
+start
+end 
+so
+
+~This is a multiline comment :)~
+
+;,=()[]{}"":
+
+~~Constants
+10
+"Hello, World!"
+'a'
+90.1
+
+~~Arithmetic op
++ - * / // ^ %
+
+~~Boolean op
+not or and !
+
+~~unary op 
+++
+
+~~invalid
+@kimAu
+À
+_kim
+

@@ -59,6 +59,11 @@ public class LookupTable {
         lookupTable.put("bundle", "BUNDLE_RSRV");
         lookupTable.put("void", "VOID_RSRV");
         lookupTable.put("in", "IN_RSRV");
+        lookupTable.put("onfail", "EXCEPTION_STMT");
+        lookupTable.put("PI", "CONSTANT");
+        lookupTable.put("GOLDEN", "CONSTANT");
+        lookupTable.put("G", "CONSTANT");
+        lookupTable.put("Q", "CONSTANT");
 
 
         // Delimeters

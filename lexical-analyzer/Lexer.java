@@ -180,7 +180,7 @@ public class Lexer{
                 }
                 
                 String lexeme = stringBuilder.toString();
-                tokens.add(new Tokenizer("STRING", lexeme).toString());
+                tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString());
                 continue;
             }
             
@@ -214,7 +214,7 @@ public class Lexer{
                 }
                 
                 String lexeme = charBuilder.toString();
-                tokens.add(new Tokenizer("CHAR", lexeme).toString());
+                tokens.add(new Tokenizer("CHAR_LITERAL", lexeme).toString());
                 continue;
             }
 
