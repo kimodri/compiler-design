@@ -111,8 +111,8 @@ public class Lexer{
                         (ch == '!' && next == '=') ||
                         (ch == '<' && next == '=') ||
                         (ch == '>' && next == '=') ||
-                        (ch == '+' && next == '+') ||
-                        (ch == '*' && next == '*')) {
+                        (ch == '/' && next == '/') ||
+                        (ch == '+' && next == '+')) {
                         operator.append(next);
                         i++;
                     }
