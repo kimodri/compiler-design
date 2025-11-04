@@ -1,0 +1,2 @@
+TOKEN, LEXEME
+STRING_LITERAL, "Kim kimAudreyMagan"
