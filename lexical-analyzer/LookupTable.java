@@ -14,6 +14,7 @@ public class LookupTable {
         lookupTable.put("!", "NOT_OP");
         lookupTable.put("//", "FLOORDIV_OP");
         lookupTable.put("++", "INCREMENT_OP");
+        lookupTable.put("--", "DECREMENT_OP");
 
         // Relational Operators
         lookupTable.put("==", "EQUALITY_OP");
