@@ -62,3 +62,8 @@ not or and !
 À
 _kim
 
+
+
+
+number my_number = 3.14156;
+text my_text = get();
