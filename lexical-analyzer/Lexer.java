@@ -82,18 +82,12 @@ public class Lexer{
                 }
 
                 String tokenType = LookupTable.getTokenType(symbol);
-                System.out.println(ch);
-                System.out.println(tokenType);
 
                 if (tokenType == null) {
                     tokens.add(new Tokenizer("SPECIAL_CHAR", symbol).toString());
                     i++;
                     continue;
                 } 
-                // else {
-                //     tokens.add(new Tokenizer(tokenType, symbol).toString());
-                // }
-
             }
 
 
@@ -155,6 +149,10 @@ public class Lexer{
             if (ch == '"') {
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append(ch);
+
+                // lagay muna yung quoute 
+                // tokens.add(new Tokenizer(LookupTable.getTokenType(String.valueOf(ch)), String.valueOf(ch)).toString());
+
                 i++;
                 boolean foundClosing = false;
                 
@@ -166,6 +164,12 @@ public class Lexer{
                         i += 2;
                     } else if (curr == '"') {
                         stringBuilder.append(curr);
+
+                        // lagay yung quote
+                        // String lexeme = stringBuilder.toString();
+                        // tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString()); 
+                        tokens.add(new Tokenizer(LookupTable.getTokenType(String.valueOf(curr)), String.valueOf(curr)).toString());
+
                         foundClosing = true;
                         i++;
                         break;
@@ -176,11 +180,14 @@ public class Lexer{
                 }
                 
                 if (!foundClosing) {
+
+                    // change this to invalid string
                     throw new RuntimeException("Syntax Error: Unclosed string literal.");
+
                 }
                 
                 String lexeme = stringBuilder.toString();
-                tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString());
+                tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString()); 
                 continue;
             }
             
