@@ -149,6 +149,37 @@ public class Lexer{
                         }
                     }
                 }
+                
+                //unary + and - handling
+                if (lexeme.equals("+") || lexeme.equals("-")) {
+                    boolean isUnary = false;
+                    
+                    if (tokens.isEmpty()) {
+                        isUnary = true;
+                    } else {
+                        String lastToken = tokens.get(tokens.size() - 1);
+                        boolean isBinary = lastToken.startsWith("IDENTIFIER,") ||
+                            lastToken.startsWith("NUM_LITERAL,") ||
+                            lastToken.startsWith("DECIMAL_LITERAL,") ||
+                            lastToken.startsWith("RIGHT_PARENTHESIS,") ||
+                            lastToken.startsWith("RIGHT_SQUARE_BRACKET,") ||
+                            lastToken.startsWith("RIGHT_CURLY_BRACE,") ||
+                            lastToken.startsWith("POST_INCREMENT_OP,") ||
+                            lastToken.startsWith("POST_DECREMENT_OP,");
+                        
+                        if (!isBinary) {
+                            isUnary = true;
+                        }
+                    }
+                    
+                    if (isUnary) {
+                        if (lexeme.equals("+")) {
+                            token = "POSITIVE_OP";
+                        } else {
+                            token = "NEGATIVE_OP";
+                        }
+                    }
+                }
 
                 tokens.add(new Tokenizer(token, lexeme).toString());
                 i++;
