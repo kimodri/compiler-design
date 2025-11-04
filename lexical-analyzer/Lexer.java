@@ -179,15 +179,12 @@ public class Lexer{
                     }
                 }
                 
-                if (!foundClosing) {
-
-                    // change this to invalid string
-                    throw new RuntimeException("Syntax Error: Unclosed string literal.");
-
-                }
-                
                 String lexeme = stringBuilder.toString();
-                tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString()); 
+                if (!foundClosing) {
+                    tokens.add(new Tokenizer("INVALID_TEXT", lexeme).toString());
+                } else {
+                    tokens.add(new Tokenizer("TEXT_LITERAL", lexeme).toString());
+                }
                 continue;
             }
             
@@ -216,12 +213,12 @@ public class Lexer{
                     i++;
                 }
                 
-                if (!foundClosing) {
-                    throw new RuntimeException("Syntax Error: Unclosed char literal.");
-                }
-                
                 String lexeme = charBuilder.toString();
-                tokens.add(new Tokenizer("CHAR_LITERAL", lexeme).toString());
+                if (!foundClosing) {
+                    tokens.add(new Tokenizer("INVALID_LETTER", lexeme).toString());
+                } else {
+                    tokens.add(new Tokenizer("LETTER_LITERAL", lexeme).toString());
+                }
                 continue;
             }
 
@@ -288,7 +285,7 @@ public class Lexer{
                 }
 
                 String lexeme = numberBuilder.toString();
-                String token = isFloat ? "FLOAT_LITERAL" : "INT_LITERAL";
+                String token = isFloat ? "DECIMAL_LITERAL" : "NUM_LITERAL";
                 tokens.add(new Tokenizer(token, lexeme).toString());
                 continue;
             }
