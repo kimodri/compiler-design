@@ -168,7 +168,7 @@ public class Lexer{
                         // lagay yung quote
                         // String lexeme = stringBuilder.toString();
                         // tokens.add(new Tokenizer("STRING_LITERAL", lexeme).toString()); 
-                        tokens.add(new Tokenizer(LookupTable.getTokenType(String.valueOf(curr)), String.valueOf(curr)).toString());
+                        // tokens.add(new Tokenizer(LookupTable.getTokenType(String.valueOf(curr)), String.valueOf(curr)).toString());
 
                         foundClosing = true;
                         i++;
