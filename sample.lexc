@@ -4,14 +4,6 @@ Mapag_mahal_25
 _kim
 
 ~~Keywords
-number
-decimal
-symbol 
-truefalse 
-text 
-list 
-true 
-false 
 nothing 
 if 
 elif 
@@ -29,24 +21,38 @@ display
 get 
 onfail 
 include 
-try 
-bundle 
-void 
-in 
+
+~Noise words
 then 
 start
 end 
 so
 
-~This is a multiline comment :)~
+~Reserved words 
+number
+decimal
+symbol 
+truefalse 
+text 
+list 
+true 
+false 
+try 
+bundle 
+void 
+in 
 
-;,=()[]{}"":
 
 ~~Constants
 10
 "Hello, World!"
 'a'
 90.1
+
+~This is a multiline comment :)~
+
+;,=()[]{}"":
+
 
 ~~Arithmetic op
 + - * / // ^ %
@@ -61,8 +67,6 @@ not or and !
 @kimAu
 À
 _kim
-
-
 
 
 number my_number = 3.14156;
