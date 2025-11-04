@@ -106,7 +106,8 @@ public class Lexer{
                         (ch == '<' && next == '=') ||
                         (ch == '>' && next == '=') ||
                         (ch == '/' && next == '/') ||
-                        (ch == '+' && next == '+')) {
+                        (ch == '+' && next == '+') ||
+                        (ch == '-' && next == '-')) {
                         operator.append(next);
                         i++;
                     }
@@ -114,6 +115,40 @@ public class Lexer{
 
                 String lexeme = operator.toString();
                 String token = LookupTable.getTokenType(lexeme);
+
+                //pre/post increment and decrement handling
+                if (lexeme.equals("++") || lexeme.equals("--")) {
+                    boolean isPre = false;
+                    int peekIndex = i + 1;
+                    while (peekIndex < code.length() && Character.isWhitespace(code.charAt(peekIndex))) {
+                        peekIndex++;
+                    }
+                    if (peekIndex < code.length() && Character.isLetter(code.charAt(peekIndex))) {
+                        isPre = true;
+                    }
+                    
+                    boolean isPost = false;
+                    if (!tokens.isEmpty()) {
+                        String lastToken = tokens.get(tokens.size() - 1);
+                        if (lastToken.startsWith("IDENTIFIER,")) {
+                            isPost = true;
+                        }
+                    }
+                    
+                    if (isPost) {
+                        if (lexeme.equals("++")) {
+                            token = "POST_INCREMENT_OP";
+                        } else {
+                            token = "POST_DECREMENT_OP";
+                        }
+                    } else if (isPre) {
+                        if (lexeme.equals("++")) {
+                            token = "PRE_INCREMENT_OP";
+                        } else {
+                            token = "PRE_DECREMENT_OP";
+                        }
+                    }
+                }
 
                 tokens.add(new Tokenizer(token, lexeme).toString());
                 i++;
